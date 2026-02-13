@@ -1,0 +1,14 @@
+#!/usr/bin/env bun
+
+import {NumbersCalculatorUseCase} from "@/calculator/application/numbers-calculator.use-case.ts";
+
+const operation = process.argv[2];
+if (operation === undefined) {
+    console.error("Please provide an operation.");
+    process.exit(1);
+}
+
+const useCase = await NumbersCalculatorUseCase.getInstance()
+const result = await useCase.execute(operation)
+
+console.log(result);
