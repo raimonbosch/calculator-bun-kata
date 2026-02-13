@@ -6,6 +6,7 @@ export class SingleNumberGrammarElementSpanish extends GrammarElement {
     protected override _id = 'U';
     protected override _language: Language = Language.SPANISH;
     protected override _elements = {
+        'cero': 0,
         'uno': 1,
         'dos': 2,
         'tres': 3,

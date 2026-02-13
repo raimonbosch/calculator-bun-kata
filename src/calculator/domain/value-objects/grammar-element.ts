@@ -1,5 +1,6 @@
 import type {Language} from "@/calculator/domain/value-objects/language.ts";
 import {GrammarValueNotFoundError} from "@/calculator/domain/exceptions/grammar-value-not-found.error.ts";
+import {GrammarTextNotFoundError} from "@/calculator/domain/exceptions/grammar-text-not-found.error.ts";
 
 export abstract class GrammarElement {
     protected abstract _id: string;
@@ -29,5 +30,16 @@ export abstract class GrammarElement {
             throw new GrammarValueNotFoundError()
         }
         return elements[text];
+    }
+
+    text(value: number): string {
+        const elements = this.elements()
+        for (const word in elements) {
+            if (elements[word] === value) {
+                return word;
+            }
+        }
+
+        throw new GrammarTextNotFoundError();
     }
 }

@@ -1,13 +1,21 @@
 import {OutOfRangeException} from "@/calculator/domain/exceptions/out-of-range-exception.ts";
-import {UnknownCategoryException} from "@/calculator/domain/exceptions/unknown-category-exception.ts";
-import {UnknownGrammarException} from "@/calculator/domain/exceptions/unknown-grammar-exception.ts";
-import {CannotCalculateNumberException} from "@/calculator/domain/exceptions/cannot-calculate-number-exception.ts";
 import {SpanishTranslatorService} from "@/calculator/domain/services/translation/spanish-translator.service.ts";
 import {EnglishTranslatorService} from "@/calculator/domain/services/translation/english-translator.service.ts";
 import {TranslationService} from "@/calculator/domain/services/translation.service.ts";
 import {GrammarElementParserService} from "@/calculator/domain/services/grammar-element-parser-service.ts";
 import {GrammarJsonRepository} from "@/calculator/infrastructure/repository/grammar-json-repository.ts";
 import type {GrammarRepository} from "@/calculator/domain/repositories/grammar-repository.ts";
+import {GrammarElementsNotFoundError} from "@/calculator/domain/exceptions/grammar-elements-not-found.error.ts";
+import {
+    SingleNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/single-number-grammar-element-spanish.ts";
+import {
+    HundredNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/hundred-number-grammar-element-spanish.ts";
+import {
+    SingleNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/single-number-grammar-element-english.ts";
+import {Language} from "@/calculator/domain/value-objects/language.ts";
 
 export class NumbersCalculatorUseCase {
     private static instance: NumbersCalculatorUseCase;
@@ -26,9 +34,7 @@ export class NumbersCalculatorUseCase {
             }
 
             if (
-                e instanceof UnknownCategoryException ||
-                e instanceof UnknownGrammarException ||
-                e instanceof CannotCalculateNumberException
+                e instanceof GrammarElementsNotFoundError
             ) {
                 return "invalid string";
             }
@@ -44,8 +50,13 @@ export class NumbersCalculatorUseCase {
                     await GrammarElementParserService.getInstance(),
                     await GrammarJsonRepository.getInstance(),
                     new TranslationService(
-                        new SpanishTranslatorService(),
-                        new EnglishTranslatorService()
+                        new SpanishTranslatorService(
+                            new SingleNumberGrammarElementSpanish(),
+                            new HundredNumberGrammarElementSpanish()
+                        ),
+                        new EnglishTranslatorService(
+                            new SingleNumberGrammarElementEnglish()
+                        )
                     )
                 );
         }
@@ -61,6 +72,8 @@ export class NumbersCalculatorUseCase {
         const parts = input.split(/( más | mas | plus | \+ )/iu);
 
         let result: number = 0;
+        let language: Language = Language.ENGLISH;
+        let isNumeric: boolean = false;
         for (const part of parts) {
             const trimmed = part.trim();
 
@@ -68,20 +81,33 @@ export class NumbersCalculatorUseCase {
                 continue;
             }
 
+            if (this.isNumeric(trimmed)) {
+                result += Number(trimmed);
+                isNumeric = true;
+                continue;
+            }
+
             const grammarList = this.grammarElementParserService.parse(
                 trimmed
             );
 
-            // @ts-ignore
-            const language = grammarList[0].language();
+            if (grammarList[0]) {
+                language = grammarList[0].language();
 
-            const grammar = this.grammarRepository.find(grammarList, language);
+                const grammar = this.grammarRepository.find(grammarList, language);
 
-            result += grammar.apply(trimmed.split(/[\s]+/iu));
+                result += grammar.apply(trimmed.split(/[\s]+/iu));
+            }
         }
 
-        //this.translatorService.translate(result, result.getLanguage());
+        if (isNumeric) {
+            return String(result);
+        }
 
-        return String(result);
+        return this.translatorService.translate(result, language);
+    }
+
+    private isNumeric(value: string): boolean {
+        return value.trim() !== "" && !isNaN(Number(value));
     }
 }

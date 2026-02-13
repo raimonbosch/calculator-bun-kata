@@ -1,12 +1,12 @@
 import {OutOfRangeException} from "@/calculator/domain/exceptions/out-of-range-exception.ts";
-import {UnknownNumberException} from "@/calculator/domain/exceptions/unknown-number-exception.ts";
+import {UnknownNumberError} from "@/calculator/domain/exceptions/unknown-number-error.ts";
 
 export class CalculatorNumber {
     private value: number;
 
     constructor(value: string) {
         if (isNaN(Number(value))) {
-            throw new UnknownNumberException();
+            throw new UnknownNumberError();
         }
 
         const numericValue = Number(value);

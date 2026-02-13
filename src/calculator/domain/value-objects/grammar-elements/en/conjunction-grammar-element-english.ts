@@ -6,7 +6,6 @@ export class ConjunctionGrammarElementEnglish extends GrammarElement {
     protected override _id = 'a';
     protected override _language: Language = Language.ENGLISH;
     protected override _elements: Record<string, number> = {
-        'and': 0,
         '-': 0,
     };
 }
