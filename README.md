@@ -34,7 +34,7 @@ Tests are included.
 
 Before running the tests you must have node >= 8 installed and run `npm install` in the console at the root folder of the project. 
 
-Run `npm test` in the console to execute the test suite.
+Run `bun test` in the console to execute the test suite.
 
 ### Examples of valid numbers
 345
@@ -60,20 +60,3 @@ doscientos quince
 onehundred
 
 tres cientos
-
-### References
-
-http://lema.rae.es/dpd/srv/search?id=rqV8h362gD62vc21qB
-https://www.ef.com/wwen/english-resources/english-grammar/numbers-english/
-
-### Final considerations
-
-Your solution must include tests.
-
-Please submit your solution as a Pull Request in this repository.
-
-How fast you implement the solution is an important factor but by far not the most relevant. We would prefer that you take your time and deliver a solution that you're proud of ;-). In terms of how you approach the problem and what exactly you deliver - that's entirely up to you.
-
-If you have any questions, don’t hesitate to ask (via issues in this repository). We'll be looking forward to your solution.
-
-Enjoy hacking! Best regards,
