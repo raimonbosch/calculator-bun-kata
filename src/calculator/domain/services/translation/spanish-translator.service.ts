@@ -6,10 +6,14 @@ import type {
     HundredNumberGrammarElementSpanish
 } from "@/calculator/domain/value-objects/grammar-elements/es/hundred-number-grammar-element-spanish.ts";
 import {UnknownNumberError} from "@/calculator/domain/exceptions/unknown-number.error.ts";
+import type {
+    TensNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/tens-number-grammar-element-spanish.ts";
 
 export class SpanishTranslatorService implements TranslateNumberToText {
     constructor(
         private readonly singleNumberGrammarElement: SingleNumberGrammarElementSpanish,
+        private readonly tensNumberGrammarElement: TensNumberGrammarElementSpanish,
         private readonly hundredNumberGrammarElement: HundredNumberGrammarElementSpanish
     ) {
     }
@@ -26,14 +30,20 @@ export class SpanishTranslatorService implements TranslateNumberToText {
 
         // 2 digits
         if (numbers.length === 2 && numbers[0] && numbers[1]) {
-            if (value <= 30 || value % 10 === 0) {
+            if (value < 30) {
                 return this.singleNumberGrammarElement.text(
                     value
                 );
             }
 
+            if (value >= 30 && value % 10 === 0) {
+                return this.tensNumberGrammarElement.text(
+                    value
+                );
+            }
+
             return (
-                this.singleNumberGrammarElement.text(
+                this.tensNumberGrammarElement.text(
                     10 * parseInt(numbers[0], 10)
                 ) +
                 " y " +
@@ -52,7 +62,7 @@ export class SpanishTranslatorService implements TranslateNumberToText {
             if (parseInt(numbers[1], 10) >= 3 && value % 10 !== 0) {
                 numberOut +=
                     " " +
-                    this.singleNumberGrammarElement.text(
+                    this.tensNumberGrammarElement.text(
                         10 * parseInt(numbers[1], 10)
                     ) +
                     " y " +

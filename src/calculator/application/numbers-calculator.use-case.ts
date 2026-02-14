@@ -16,6 +16,9 @@ import {
     SingleNumberGrammarElementEnglish
 } from "@/calculator/domain/value-objects/grammar-elements/en/single-number-grammar-element-english.ts";
 import {Language} from "@/calculator/domain/value-objects/language.ts";
+import {
+    TensNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/tens-number-grammar-element-spanish.ts";
 
 export class NumbersCalculatorUseCase {
     private static instance: NumbersCalculatorUseCase;
@@ -52,6 +55,7 @@ export class NumbersCalculatorUseCase {
                     new TranslationService(
                         new SpanishTranslatorService(
                             new SingleNumberGrammarElementSpanish(),
+                            new TensNumberGrammarElementSpanish(),
                             new HundredNumberGrammarElementSpanish()
                         ),
                         new EnglishTranslatorService(
@@ -98,6 +102,10 @@ export class NumbersCalculatorUseCase {
 
                 result += grammar.apply(trimmed.split(/[\s]+/iu));
             }
+        }
+
+        if (result >= 1000) {
+            throw new OutOfRangeException();
         }
 
         if (isNumeric) {
