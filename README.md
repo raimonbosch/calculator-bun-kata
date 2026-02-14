@@ -14,6 +14,16 @@ Max number is 999 and min number is 0.
 
 The entry point of the CLI is the file `calculate`. This file already already exists in the repository but implementation is missing.  
 
+## Solution 
+
+![Sum Calculator Challenge - Sum Calculator Challenge (1)](https://github.com/user-attachments/assets/c0baf49e-774e-48be-aadc-c8d7f2fd8470)
+
+## How to run 
+
+> bun install
+
+> bun test 
+
 ### Tests
 
 Tests are included.
