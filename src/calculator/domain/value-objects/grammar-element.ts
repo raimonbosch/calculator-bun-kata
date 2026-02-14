@@ -21,14 +21,19 @@ export abstract class GrammarElement {
 
     matches(text: string): boolean {
         const elements = this.elements()
-        return !!elements[text];
+        if (elements[text] === undefined) {
+            return false;
+        }
+
+        return true;
     }
 
     value(text: string): number {
         const elements = this.elements()
-        if (!elements[text]) {
+        if (elements[text] === undefined) {
             throw new GrammarValueNotFoundError()
         }
+
         return elements[text];
     }
 

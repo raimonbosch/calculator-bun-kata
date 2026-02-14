@@ -2,11 +2,17 @@
   "es": {
     "HTaU": "sum; 0, 1, 3",
     "U": "sum; 0",
-    "TaU": "sum; 0, 2"
+    "TaU": "sum; 0, 2",
+    "mU": "out-of-range; 0",
+    "M": "out-of-range; 0",
+    "UM": "out-of-range; 0"
   },
   "en": {
     "UH": "mul; 0, 1",
     "U": "sum; 0",
-    "UHTU": "mulsum; 0, 1; 2, 3"
+    "UHTU": "mulsum; 0, 1; 2, 3",
+    "mU": "out-of-range; 0",
+    "M": "out-of-range; 0",
+    "UM": "out-of-range; 0"
   }
 }

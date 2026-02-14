@@ -12,9 +12,47 @@ import {
 import {
     TensNumberGrammarElementSpanish
 } from "@/calculator/domain/value-objects/grammar-elements/es/tens-number-grammar-element-spanish.ts";
+import {
+    NegativeNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/negative-number-grammar-element-spanish.ts";
+import {
+    ThousandNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/thousand-number-grammar-element-spanish.ts";
+import {
+    ConjunctionGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/conjunction-grammar-element-english.ts";
+import {
+    HundredNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/hundred-number-grammar-element-english.ts";
+import {
+    SingleNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/single-number-grammar-element-english.ts";
+import {
+    TensNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/tens-number-grammar-element-english.ts";
+import {
+    NegativeNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/negative-number-grammar-element-english.ts";
+import {
+    ThousandNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/thousand-number-grammar-element-english.ts";
 
 export class GrammarElementParserService {
     private static instance: GrammarElementParserService;
+    private static defaultGrammarElements = [
+        new ConjunctionGrammarElementSpanish(),
+        new HundredNumberGrammarElementSpanish(),
+        new SingleNumberGrammarElementSpanish(),
+        new TensNumberGrammarElementSpanish(),
+        new NegativeNumberGrammarElementSpanish(),
+        new ThousandNumberGrammarElementSpanish(),
+        new ConjunctionGrammarElementEnglish(),
+        new HundredNumberGrammarElementEnglish(),
+        new SingleNumberGrammarElementEnglish(),
+        new TensNumberGrammarElementEnglish(),
+        new NegativeNumberGrammarElementEnglish(),
+        new ThousandNumberGrammarElementEnglish(),
+    ];
 
     constructor(
         private readonly defaultGrammarElements: GrammarElement[],
@@ -25,7 +63,7 @@ export class GrammarElementParserService {
         const parts = text.split(/(\s)+/iu);
         for (const part of parts) {
             for (const grammarElement of this.defaultGrammarElements) {
-                if (grammarElement.matches(text)) {
+                if (grammarElement.matches(part)) {
                     grammarElements.push(grammarElement);
                 }
             }
@@ -43,12 +81,9 @@ export class GrammarElementParserService {
             return GrammarElementParserService.instance;
         }
 
-        GrammarElementParserService.instance = new GrammarElementParserService([
-            new ConjunctionGrammarElementSpanish(),
-            new HundredNumberGrammarElementSpanish(),
-            new SingleNumberGrammarElementSpanish(),
-            new TensNumberGrammarElementSpanish(),
-        ]);
+        GrammarElementParserService.instance = new GrammarElementParserService(
+            GrammarElementParserService.defaultGrammarElements
+        );
 
         return GrammarElementParserService.instance;
     }

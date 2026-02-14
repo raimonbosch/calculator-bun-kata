@@ -25,6 +25,18 @@ import {
 import {
     SingleNumberGrammarElementEnglish
 } from "@/calculator/domain/value-objects/grammar-elements/en/single-number-grammar-element-english.ts";
+import {
+    ThousandNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/thousand-number-grammar-element-spanish.ts";
+import {
+    ThousandNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/thousand-number-grammar-element-english.ts";
+import {
+    NegativeNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/negative-number-grammar-element-english.ts";
+import {
+    NegativeNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/negative-number-grammar-element-spanish.ts";
 
 export class GrammarElementFactory {
     public static async getInstance(grammarElement: string, language: Language): Promise<GrammarElement> {
@@ -38,6 +50,10 @@ export class GrammarElementFactory {
                     return new TensNumberGrammarElementSpanish();
                 case 'U':
                     return new SingleNumberGrammarElementSpanish();
+                case 'M':
+                    return new ThousandNumberGrammarElementSpanish();
+                case 'm':
+                    return new NegativeNumberGrammarElementSpanish();
             }
         }
 
@@ -51,6 +67,10 @@ export class GrammarElementFactory {
                     return new TensNumberGrammarElementEnglish();
                 case 'U':
                     return new SingleNumberGrammarElementEnglish();
+                case 'M':
+                    return new ThousandNumberGrammarElementEnglish();
+                case 'm':
+                    return new NegativeNumberGrammarElementEnglish();
             }
         }
 
