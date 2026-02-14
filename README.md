@@ -22,7 +22,11 @@ The entry point of the CLI is the file `calculate`. This file already already ex
 
 > bun install
 
-> bun test 
+> bun test
+
+or
+
+> ./calculate "two plus three"
 
 ### Tests
 
