@@ -1,4 +1,4 @@
-import {OutOfRangeException} from "@/calculator/domain/exceptions/out-of-range-exception.ts";
+import {OutOfRangeError} from "@/calculator/domain/exceptions/out-of-range.error.ts";
 import {SpanishTranslatorService} from "@/calculator/domain/services/translation/spanish-translator.service.ts";
 import {EnglishTranslatorService} from "@/calculator/domain/services/translation/english-translator.service.ts";
 import {TranslationService} from "@/calculator/domain/services/translation.service.ts";
@@ -19,6 +19,10 @@ import {Language} from "@/calculator/domain/value-objects/language.ts";
 import {
     TensNumberGrammarElementSpanish
 } from "@/calculator/domain/value-objects/grammar-elements/es/tens-number-grammar-element-spanish.ts";
+import {GrammarNotFoundError} from "@/calculator/domain/exceptions/grammar-not-found.error.ts";
+import {
+    TensNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/tens-number-grammar-element-english.ts";
 
 export class NumbersCalculatorUseCase {
     private static instance: NumbersCalculatorUseCase;
@@ -32,12 +36,13 @@ export class NumbersCalculatorUseCase {
         try {
             return this.tryExecute(input);
         } catch (e) {
-            if (e instanceof OutOfRangeException) {
+            if (e instanceof OutOfRangeError) {
                 return "some number is out of range (0-999)";
             }
 
             if (
-                e instanceof GrammarElementsNotFoundError
+                e instanceof GrammarElementsNotFoundError ||
+                e instanceof GrammarNotFoundError
             ) {
                 return "invalid string";
             }
@@ -59,7 +64,8 @@ export class NumbersCalculatorUseCase {
                             new HundredNumberGrammarElementSpanish()
                         ),
                         new EnglishTranslatorService(
-                            new SingleNumberGrammarElementEnglish()
+                            new SingleNumberGrammarElementEnglish(),
+                            new TensNumberGrammarElementEnglish()
                         )
                     )
                 );
@@ -79,17 +85,23 @@ export class NumbersCalculatorUseCase {
         let language: Language = Language.ENGLISH;
         let isNumeric: boolean = false;
         for (const part of parts) {
-            const trimmed = part.trim();
+            let trimmed = part.trim();
 
             if (!trimmed || /^(más|mas|plus|\+)$/iu.test(trimmed)) {
                 continue;
             }
 
             if (this.isNumeric(trimmed)) {
-                result += Number(trimmed);
+                const partNumber = Number(trimmed);
+                if (partNumber < 0 || partNumber >= 1000) {
+                    throw new OutOfRangeError();
+                }
+                result += partNumber;
                 isNumeric = true;
                 continue;
             }
+
+            trimmed = this.prepareInput(trimmed);
 
             const grammarList = this.grammarElementParserService.parse(
                 trimmed
@@ -104,8 +116,8 @@ export class NumbersCalculatorUseCase {
             }
         }
 
-        if (result >= 1000) {
-            throw new OutOfRangeException();
+        if (result < 0 || result >= 1000) {
+            throw new OutOfRangeError();
         }
 
         if (isNumeric) {
@@ -117,5 +129,9 @@ export class NumbersCalculatorUseCase {
 
     private isNumeric(value: string): boolean {
         return value.trim() !== "" && !isNaN(Number(value));
+    }
+
+    private prepareInput(input: string): string {
+        return input.replaceAll('-', ' - ');
     }
 }

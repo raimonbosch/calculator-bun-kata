@@ -1,58 +1,85 @@
 const { promisify } = require("util");
 const exec = promisify(require("child_process").exec);
 
+async function runCalculate(input = "") {
+  try {
+    const { stdout, stderr } = await exec(
+        `./calculate "${input}"`
+    );
+
+    return {
+      stdout: stdout.trim(),
+      stderr: stderr.trim(),
+      success: true,
+    };
+  } catch (error) {
+    return {
+      stdout: (error.stdout || "").trim(),
+      stderr: (error.stderr || "").trim(),
+      code: error.code,
+      success: false,
+    };
+  }
+}
+
 describe("When input is empty", () => {
-  it("should return an empty string", async () => {
-    const { stdout } = await exec("./calculate");
-    expect(stdout).toEqual(expect.stringContaining("empty input"));
+  it("should print 'empty input'", async () => {
+    const result = await runCalculate();
+
+    expect(result.stdout).toBe(
+        "empty input"
+    );
   });
 });
 
-describe("when number is out of range", () => {
-  it.each`
-    invalidInput
-    ${"1000"}
-    ${"-1"}
-    ${"one thousand"}
-    ${"minus one"}
-    ${"mil"}
-    ${"menos uno"}
-  `("should return an error message for input '$invalidInput'", async ({invalidInput}) => {
-    const { stdout } = await exec(`./calculate "${invalidInput}"`);
-    expect(stdout).toEqual(
-      expect.stringContaining("some number is out of range (0-999)")
+describe("When number is out of range", () => {
+  it.each([
+    "1000",
+    "-1",
+    "one thousand",
+    "minus one",
+    "mil",
+    "menos uno",
+  ])("should fail with out-of-range error for input: %s", async (invalidInput) => {
+    const result = await runCalculate(invalidInput);
+
+    expect(result.stdout).toBe(
+        "some number is out of range (0-999)"
     );
   });
 });
 
 describe("When input string is invalid", () => {
-  it.each`
-    invalidInput
-    ${"onehundred"}
-    ${"fortyfour"}
-    ${"cincuenta uno"}
-  `(
-    "should return an error message for '$invalidInput'",
-    async ({invalidInput}) => {
-      const { stdout } = await exec(`./calculate "${invalidInput}"`);
-      expect(stdout).toEqual(expect.stringContaining("invalid string"));
-    }
-  );
+  it.each([
+    "onehundred",
+    "fortyfour",
+    "cincuenta uno",
+  ])("should fail with invalid string error for input: %s", async (invalidInput) => {
+    const result = await runCalculate(invalidInput);
+
+    expect(result.stdout).toBe("invalid string");
+  });
 });
 
-describe("when input is valid", () => {
-  it.each`
-    input                                   | result
-    ${"5"}                                  | ${"5"}
-    ${"0 + 1"}                              | ${"1"}
-    ${"five"}                               | ${"five"}
-    ${"zero plus one"}                      | ${"one"}
-    ${"nine hundred ninety-eight plus one"} | ${"nine hundred ninety-nine"}
-    ${"cinco"}                              | ${"cinco"}
-    ${"cero mas uno"}                       | ${"uno"}
-    ${"novecientos noventa y ocho mas uno"} | ${"novecientos noventa y nueve"}
-  `("should return '$result' for '$input'", async ({ input, result }) => {
-    const { stdout } = await exec(`./calculate "${input}"`);
-    expect(stdout).toEqual(expect.stringContaining(result));
+describe("When input is valid", () => {
+  it.each([
+    { input: "5", expected: "5" },
+    { input: "0 + 1", expected: "1" },
+    { input: "five", expected: "five" },
+    { input: "zero plus one", expected: "one" },
+    {
+      input: "nine hundred ninety-eight plus one",
+      expected: "nine hundred ninety-nine",
+    },
+    { input: "cinco", expected: "cinco" },
+    { input: "cero mas uno", expected: "uno" },
+    {
+      input: "novecientos noventa y ocho mas uno",
+      expected: "novecientos noventa y nueve",
+    },
+  ])("should return correct result for input: %s", async ({ input, expected }) => {
+    const result = await runCalculate(input);
+
+    expect(result.stdout).toBe(expected);
   });
 });

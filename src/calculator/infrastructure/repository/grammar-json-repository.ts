@@ -6,9 +6,9 @@ import {GrammarElement} from "@/calculator/domain/value-objects/grammar-element.
 import {GrammarNotFoundError} from "@/calculator/domain/exceptions/grammar-not-found.error.ts";
 import type {GrammarRepository} from "@/calculator/domain/repositories/grammar-repository.ts";
 import type {Language} from "@/calculator/domain/value-objects/language.ts";
-import {OperationFactory} from "@/calculator/domain/value-objects/operations/operation.factory.ts";
 import type {Operation} from "@/calculator/domain/value-objects/operations/operation.ts";
-import {GrammarElementFactory} from "@/calculator/domain/value-objects/grammar-elements/grammar-element.factory.ts";
+import {OperationFactory} from "@/calculator/domain/factories/operation.factory.ts";
+import {GrammarElementFactory} from "@/calculator/domain/factories/grammar-element.factory.ts";
 
 export class GrammarJsonRepository implements GrammarRepository{
     private static instance: GrammarJsonRepository;

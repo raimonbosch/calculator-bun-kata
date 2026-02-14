@@ -10,8 +10,10 @@
   "en": {
     "UH": "mul; 0, 1",
     "U": "sum; 0",
-    "UHTU": "mulsum; 0, 1; 2, 3",
+    "UHTaU": "mulsum; 0, 1; 2, 4",
+    "UHT": "mulsum; 0, 1; 2",
     "mU": "out-of-range; 0",
+    "aU": "out-of-range; 0",
     "M": "out-of-range; 0",
     "UM": "out-of-range; 0"
   }

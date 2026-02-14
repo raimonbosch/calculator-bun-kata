@@ -2,7 +2,7 @@ import {SumOperation} from "@/calculator/domain/value-objects/operations/sum-ope
 import {MulOperation} from "@/calculator/domain/value-objects/operations/mul-operation.ts";
 import {MulSumOperation} from "@/calculator/domain/value-objects/operations/mul-sum-operation.ts";
 import {UnavailableOperationError} from "@/calculator/domain/exceptions/unavailable-operation.error.ts";
-import {OutOfRangeException} from "@/calculator/domain/exceptions/out-of-range-exception.ts";
+import {OutOfRangeError} from "@/calculator/domain/exceptions/out-of-range.error.ts";
 import {OutOfRangeOperation} from "@/calculator/domain/value-objects/operations/out-of-range-operation.ts";
 
 export class OperationFactory {

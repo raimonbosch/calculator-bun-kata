@@ -1,4 +1,4 @@
-import {OutOfRangeException} from "@/calculator/domain/exceptions/out-of-range-exception.ts";
+import {OutOfRangeError} from "@/calculator/domain/exceptions/out-of-range.error.ts";
 import {UnknownNumberError} from "@/calculator/domain/exceptions/unknown-number-error.ts";
 
 export class CalculatorNumber {
@@ -12,7 +12,7 @@ export class CalculatorNumber {
         const numericValue = Number(value);
 
         if (numericValue < 0 || numericValue >= 1000) {
-            throw new OutOfRangeException();
+            throw new OutOfRangeError();
         }
 
         this.value = Math.floor(numericValue);
