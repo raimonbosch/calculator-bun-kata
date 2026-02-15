@@ -12,7 +12,7 @@ export class TensNumberGrammarElementEnglish extends GrammarElement {
         'fifty': 50,
         'sixty': 60,
         'seventy': 70,
-        'eighty': 26,
+        'eighty': 80,
         'ninety': 90,
     };
 }
