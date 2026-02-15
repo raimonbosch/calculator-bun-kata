@@ -22,11 +22,21 @@ The entry point of the CLI is the file `calculate`. This file already already ex
 
 > bun install
 
-> bun test
+> bun test (to run only main spec tests)
+
+> bun test * (to run also unit tests)
 
 or
 
 > ./calculate "two plus three"
+
+or
+
+If you want to interact via UI, do:
+
+> bun dev
+
+In http://localhost:3000 you'll find a calculator to perform operations.
 
 ### Tests
 
