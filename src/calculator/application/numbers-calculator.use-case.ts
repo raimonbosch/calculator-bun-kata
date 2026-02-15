@@ -3,7 +3,7 @@ import {SpanishTranslatorService} from "@/calculator/domain/services/translation
 import {EnglishTranslatorService} from "@/calculator/domain/services/translation/english-translator.service.ts";
 import {TranslationService} from "@/calculator/domain/services/translation.service.ts";
 import {GrammarElementParserService} from "@/calculator/domain/services/grammar-element-parser-service.ts";
-import {GrammarJsonRepository} from "@/calculator/infrastructure/repository/grammar-json-repository.ts";
+import {GrammarJsonRepository} from "@/calculator/infrastructure/repositories/grammar-json-repository.ts";
 import type {GrammarRepository} from "@/calculator/domain/repositories/grammar-repository.ts";
 import {GrammarElementsNotFoundError} from "@/calculator/domain/exceptions/grammar-elements-not-found.error.ts";
 import {
