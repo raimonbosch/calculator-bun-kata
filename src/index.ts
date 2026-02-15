@@ -1,31 +1,22 @@
 import { serve } from "bun";
 import index from "./index.html";
+import {NumbersCalculatorUseCase} from "@/calculator/application/numbers-calculator.use-case.ts";
 
 const server = serve({
   routes: {
     // Serve index.html for all unmatched routes.
     "/*": index,
 
-    "/api/hello": {
-      async GET(req) {
+    "/api/calculator": {
+      async POST(req) {
+        const useCase = await NumbersCalculatorUseCase.getInstance()
+        const data = await req.json()
+        const result = await useCase.execute(data?.content)
         return Response.json({
-          message: "Hello, world!",
-          method: "GET",
+          message: result,
+          method: "POST",
         });
       },
-      async PUT(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "PUT",
-        });
-      },
-    },
-
-    "/api/hello/:name": async req => {
-      const name = req.params.name;
-      return Response.json({
-        message: `Hello, ${name}!`,
-      });
     },
   },
 
