@@ -73,6 +73,16 @@ export class SpanishTranslatorService implements TranslateNumberToText {
                 return numberOut;
             }
 
+            if (parseInt(numbers[1], 10) >= 3 && value % 10 === 0) {
+                numberOut +=
+                    " " +
+                    this.tensNumberGrammarElement.text(
+                        10 * parseInt(numbers[1], 10)
+                    );
+
+                return numberOut;
+            }
+
             numberOut +=
                 " " +
                 this.singleNumberGrammarElement.text(
