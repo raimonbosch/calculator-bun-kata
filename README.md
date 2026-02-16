@@ -28,6 +28,7 @@ The structure of the solution is based on using a `GrammarRepository` implemente
     "HU": "sum; 0, 1",
     "U": "sum; 0",
     "T": "sum; 0",
+    "H": "sum; 0",
     "TaU": "sum; 0, 2",
     "mU": "out-of-range; 0",
     "M": "out-of-range; 0",
