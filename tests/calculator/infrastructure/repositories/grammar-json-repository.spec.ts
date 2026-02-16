@@ -47,6 +47,13 @@ describe("GrammarJsonRepository", () => {
             expect(result).toBe(282);
         });
 
+        it("applies spanish grammar HU correctly", () => {
+            const result = sut
+                .find([grammarElementH_es, grammarElementU_es], Language.SPANISH)
+                .apply(["cuatrocientos", "cuatro"])
+            expect(result).toBe(404);
+        });
+
         it("applies spanish grammar HT correctly", () => {
             const result = sut
                 .find([grammarElementH_es, grammarElementT_es], Language.SPANISH)
