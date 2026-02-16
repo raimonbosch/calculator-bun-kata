@@ -63,6 +63,8 @@ export class EnglishTranslatorService implements TranslateNumberToText {
                     this.singleNumberGrammarElement.text(
                         parseInt(numbers[2], 10)
                     );
+
+                return numberOut;
             }
 
             if (value % 10 === 0) {
@@ -71,13 +73,15 @@ export class EnglishTranslatorService implements TranslateNumberToText {
                     this.tensNumberGrammarElement.text(
                         10 * parseInt(numbers[1], 10)
                     );
+
+                return numberOut;
             }
 
-            /*numberOut +=
+            numberOut +=
                 " " +
                 this.singleNumberGrammarElement.text(
                     parseInt(numbers[1] + numbers[2], 10)
-                );*/
+                );
 
             return numberOut;
         }
