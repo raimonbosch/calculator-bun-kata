@@ -1,4 +1,3 @@
-
 import {describe, it, expect, beforeAll} from "bun:test";
 import {SpanishTranslatorService} from "@/calculator/domain/services/translation/spanish-translator.service.ts";
 import { es } from "n2words";

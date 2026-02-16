@@ -1,4 +1,3 @@
-import type {GrammarElement} from "@/calculator/domain/value-objects/grammar-element.ts";
 import {Operation} from "@/calculator/domain/value-objects/operations/operation.ts";
 
 export class MulOperation extends Operation {
