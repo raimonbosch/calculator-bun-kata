@@ -22,9 +22,7 @@ The entry point of the CLI is the file `calculate`. This file already already ex
 
 > bun install
 
-> bun test (to run only main spec tests)
-
-> bun test * (to run also unit tests)
+> bun test
 
 or
 
