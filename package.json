@@ -19,6 +19,7 @@
     "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "n2words": "^3.1.0"
   }
 }
