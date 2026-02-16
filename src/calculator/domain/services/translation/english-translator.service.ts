@@ -67,7 +67,7 @@ export class EnglishTranslatorService implements TranslateNumberToText {
                 return numberOut;
             }
 
-            if (value % 10 === 0) {
+            if (value % 10 === 0 && numbers[1] !== "0") {
                 numberOut +=
                     " " +
                     this.tensNumberGrammarElement.text(
@@ -77,11 +77,13 @@ export class EnglishTranslatorService implements TranslateNumberToText {
                 return numberOut;
             }
 
-            numberOut +=
-                " " +
-                this.singleNumberGrammarElement.text(
-                    parseInt(numbers[1] + numbers[2], 10)
-                );
+            if (numbers[2] !== "0") {
+                numberOut +=
+                    " " +
+                    this.singleNumberGrammarElement.text(
+                        parseInt(numbers[1] + numbers[2], 10)
+                    );
+            }
 
             return numberOut;
         }

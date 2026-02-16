@@ -57,17 +57,7 @@ export class NumbersCalculatorUseCase {
                 new NumbersCalculatorUseCase(
                     await GrammarElementParserService.getInstance(),
                     await GrammarJsonRepository.getInstance(),
-                    new TranslationService(
-                        new SpanishTranslatorService(
-                            new SingleNumberGrammarElementSpanish(),
-                            new TensNumberGrammarElementSpanish(),
-                            new HundredNumberGrammarElementSpanish()
-                        ),
-                        new EnglishTranslatorService(
-                            new SingleNumberGrammarElementEnglish(),
-                            new TensNumberGrammarElementEnglish()
-                        )
-                    )
+                    await TranslationService.getInstance(),
                 );
         }
 
