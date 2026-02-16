@@ -41,6 +41,8 @@ import {
 import {
     ThousandNumberGrammarElementEnglish
 } from "@/calculator/domain/value-objects/grammar-elements/en/thousand-number-grammar-element-english.ts";
+import {Language} from "@/calculator/domain/value-objects/language.ts";
+import {InvalidGrammarError} from "@/calculator/domain/exceptions/invalid-grammar.error.ts";
 
 
 describe("Grammar", () => {
@@ -267,6 +269,23 @@ describe("Grammar", () => {
             expect(() => {
                 sut.apply(["eight", "thousand"]);
             }).toThrow(OutOfRangeError);
+        });
+    });
+
+    describe("invalid grammar errors", () => {
+        it("applies invalid grammar", () => {
+            sut = new Grammar(
+                'en-UH',
+                [
+                    new SingleNumberGrammarElementEnglish(),
+                    new HundredNumberGrammarElementEnglish(),
+                ],
+                new MulOperation([0, 1])
+            );
+
+            expect(() => {
+                sut.apply(["three", "hundred", "three"]);
+            }).toThrow(InvalidGrammarError);
         });
     });
 });
