@@ -54,5 +54,10 @@ describe("TranslationService", () => {
             const result = sut.translate(850, Language.ENGLISH);
             expect(result).toBe("eight hundred fifty");
         });
+
+        it("translates english grammar UHT", () => {
+            const result = sut.translate(310, Language.ENGLISH);
+            expect(result).toBe("three hundred ten");
+        });
     });
 });
