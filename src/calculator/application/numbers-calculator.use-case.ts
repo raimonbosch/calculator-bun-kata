@@ -6,6 +6,7 @@ import type {GrammarRepository} from "@/calculator/domain/repositories/grammar-r
 import {GrammarElementsNotFoundError} from "@/calculator/domain/exceptions/grammar-elements-not-found.error.ts";
 import {Language} from "@/calculator/domain/value-objects/language.ts";
 import {GrammarNotFoundError} from "@/calculator/domain/exceptions/grammar-not-found.error.ts";
+import {InvalidGrammarError} from "@/calculator/domain/exceptions/invalid-grammar.error.ts";
 
 export class NumbersCalculatorUseCase {
     private static instance: NumbersCalculatorUseCase;
@@ -25,7 +26,8 @@ export class NumbersCalculatorUseCase {
 
             if (
                 e instanceof GrammarElementsNotFoundError ||
-                e instanceof GrammarNotFoundError
+                e instanceof GrammarNotFoundError ||
+                e instanceof InvalidGrammarError
             ) {
                 return "invalid string";
             }
