@@ -148,6 +148,13 @@ describe("GrammarJsonRepository", () => {
             expect(result).toBe(507);
         });
 
+        it("applies english grammar TaU correctly", () => {
+            const result = sut
+                .find([grammarElementT_en, grammarElementa_en, grammarElementU_en], Language.ENGLISH)
+                .apply(["twenty", "-", "two"])
+            expect(result).toBe(22);
+        });
+
         it("applies english grammar mU gives out of range", () => {
             expect(() => {
                 sut.find([grammarElementm_en, grammarElementU_en], Language.ENGLISH).apply(["minus", "seven"]);

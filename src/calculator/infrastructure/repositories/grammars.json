@@ -15,6 +15,7 @@
     "UH": "mul; 0, 1",
     "U": "sum; 0",
     "T": "sum; 0",
+    "TaU": "sum; 0, 2",
     "UHTaU": "mulsum; 0, 1; 2, 4",
     "UHT": "mulsum; 0, 1; 2",
     "UHU": "mulsum; 0, 1; 2",

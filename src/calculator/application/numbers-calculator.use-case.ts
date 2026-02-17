@@ -105,6 +105,8 @@ export class NumbersCalculatorUseCase {
     }
 
     private prepareInput(input: string): string {
-        return input.replaceAll('-', ' - ');
+        return input
+            .replaceAll('-', ' - ')
+            .replace(/\p{Diacritic}/gu, "");
     }
 }
