@@ -7,6 +7,15 @@ import {
 import {
     TensNumberGrammarElementEnglish
 } from "@/calculator/domain/value-objects/grammar-elements/en/tens-number-grammar-element-english.ts";
+import {
+    SingleNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/single-number-grammar-element-spanish.ts";
+import {
+    TensNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/tens-number-grammar-element-spanish.ts";
+import {
+    HundredNumberGrammarElementSpanish
+} from "@/calculator/domain/value-objects/grammar-elements/es/hundred-number-grammar-element-spanish.ts";
 
 export class TranslationService {
     constructor(
@@ -26,7 +35,11 @@ export class TranslationService {
 
     public static async getInstance(): Promise<TranslationService> {
         return new TranslationService(
-            new SpanishTranslatorService(),
+            new SpanishTranslatorService(
+                new SingleNumberGrammarElementSpanish(),
+                new TensNumberGrammarElementSpanish(),
+                new HundredNumberGrammarElementSpanish()
+            ),
             new EnglishTranslatorService(
                 new SingleNumberGrammarElementEnglish(),
                 new TensNumberGrammarElementEnglish(),
