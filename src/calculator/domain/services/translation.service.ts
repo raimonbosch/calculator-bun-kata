@@ -1,6 +1,12 @@
 import {Language} from "@/calculator/domain/value-objects/language.ts";
 import {SpanishTranslatorService} from "@/calculator/domain/services/translation/spanish-translator.service.ts";
 import {EnglishTranslatorService} from "@/calculator/domain/services/translation/english-translator.service.ts";
+import {
+    SingleNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/single-number-grammar-element-english.ts";
+import {
+    TensNumberGrammarElementEnglish
+} from "@/calculator/domain/value-objects/grammar-elements/en/tens-number-grammar-element-english.ts";
 
 export class TranslationService {
     constructor(
@@ -21,7 +27,10 @@ export class TranslationService {
     public static async getInstance(): Promise<TranslationService> {
         return new TranslationService(
             new SpanishTranslatorService(),
-            new EnglishTranslatorService()
+            new EnglishTranslatorService(
+                new SingleNumberGrammarElementEnglish(),
+                new TensNumberGrammarElementEnglish(),
+            )
         );
     }
 }
