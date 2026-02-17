@@ -57,7 +57,7 @@ So the general process of calculation of the `CalculatorUseCase` would be as fol
 2. Send the calculated GrammarElements back to the use case.
 3. Once we have this list of `GrammarElement` we query to our `GrammarRepository` and get the corresponding `Grammar`. This `Grammar` contains the operation to be performed.
 4. With the `Grammar` itself we call to `Grammar.apply` and the operation will be performed. So we get the number calculation.
-5. Finally, we would call to our `TranslationService` in order to convert the calculated result number into a text again. The approach by now it is quite independent to the Grammars.
+5. Finally, we would call to our `TranslationService` in order to convert the calculated result number into a text again by reusing our GrammarElements to convert numbers in text.
 
 
 ## How to run 
