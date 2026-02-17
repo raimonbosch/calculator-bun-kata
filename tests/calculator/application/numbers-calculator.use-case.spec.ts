@@ -24,11 +24,29 @@ describe("NumbersCalculatorUseCase", () => {
             }
         });
 
+        it("calculates 0..999 sums in english", async () => {
+            for (let i = 0; i <= 999; i++) {
+                const part1 = en(i).replaceAll(' hundred and ', ' hundred ');
+                const part2 = en(999 - i).replaceAll(' hundred and ', ' hundred ');
+                const result = await sut.execute(part1 + " plus " +  part2);
+                expect(result).toBe("nine hundred ninety-nine");
+            }
+        });
+
         it("calculates 0..999 texts in spanish", async () => {
             for (let i = 0; i <= 999; i++) {
                 const expected = es(i).replaceAll('ciento ', 'cien ');
                 const actual = await sut.execute(expected);
                 expect(normalize(actual)).toBe(normalize(expected));
+            }
+        });
+
+        it("calculates 0..999 sums in spanish", async () => {
+            for (let i = 0; i <= 999; i++) {
+                const part1 = es(i).replaceAll(' hundred and ', ' hundred ');
+                const part2 = es(999 - i).replaceAll(' hundred and ', ' hundred ');
+                const result = await sut.execute(part1 + " plus " +  part2);
+                expect(result).toBe("novecientos noventa y nueve");
             }
         });
 
