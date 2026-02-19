@@ -12,9 +12,34 @@ The string will be two numbers and an infix operator (+/mas/plus).
 
 Max number is 999 and min number is 0.
 
-The entry point of the CLI is the file `calculate`. This file already already exists in the repository but implementation is missing.  
+The entry point of the CLI is the file `calculate`. This file already already exists in the repository but implementation is missing.
 
-## Solution 
+### Examples of valid numbers
+345
+
+three hundred forty-five
+
+trescientos cuarenta y cinco
+
+101
+
+one hundred one
+
+ciento uno
+
+215
+
+two hundred fifteen
+
+doscientos quince
+
+### Examples of invalid inputs
+onehundred
+
+tres cientos
+
+
+# Proposed Solution to the Kata
 
 ![Sum Calculator Challenge - Sum Calculator Challenge (1)](https://github.com/user-attachments/assets/c0baf49e-774e-48be-aadc-c8d7f2fd8470)
 
@@ -77,36 +102,3 @@ If you want to interact via UI, do:
 > bun dev
 
 In http://localhost:3000 you'll find a calculator to perform operations.
-
-### Tests
-
-Tests are included.
-
-Before running the tests you must have node >= 8 installed and run `npm install` in the console at the root folder of the project. 
-
-Run `bun test` in the console to execute the test suite.
-
-### Examples of valid numbers
-345
-
-three hundred forty-five
-
-trescientos cuarenta y cinco
-
-101
-
-one hundred one
-
-ciento uno
-
-215
-
-two hundred fifteen
-
-doscientos quince
-
-
-### Examples of invalid inputs
-onehundred
-
-tres cientos
